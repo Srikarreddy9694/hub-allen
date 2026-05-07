@@ -41,9 +41,11 @@
       ]
     ],
     "extra": {
+      "router": {},
       "eas": {
-        "projectId": "hub-allen"
+        "projectId": "4693c700-755f-4dc6-b018-9fe88d0b98b0"
       }
-    }
+    },
+    "owner": "srikarreddy9"
   }
 }
