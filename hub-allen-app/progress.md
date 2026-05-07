@@ -42,6 +42,12 @@ All screens implemented. Dependencies added: tailwindcss@3 (NativeWind preset), 
 [Fix | Event time timezone] supabase/functions/sync-events/index.ts — parseDate now correctly applies America/Chicago offset (CDT -05:00 Mar–Oct / CST -06:00 Nov–Feb) instead of treating local time as UTC; DTSTART/DTEND cases now pass full rawKey+value so TZID param is available to parseDate
 [Fix | HTML in description] supabase/functions/sync-events/index.ts + app/event/[id].tsx — stripHtml() added in edge function before DB storage (strips tags, decodes HTML entities, collapses whitespace) and in app as safety net on description render
 
+## Session 5 — Bug Fixes
+
+[Fix | Tab label wrapping] app/(tabs)/_layout.tsx — added width 33.33% and overflow hidden to tabItem, numberOfLines=1 and adjustsFontSizeToFit to prevent "Upcoming" splitting to 2 lines on S24 Ultra
+[Fix | Event detail safe area] app/event/[id].tsx — contentContainerStyle paddingBottom now uses 48 + insets.bottom, clearing Android system nav bar on S24 Ultra
+[Fix | Save button auth] app/event/[id].tsx — save ♡ now checks session before calling toggleSaved; logged-out users see LoginSheet with callback that auto-saves after sign-in; logged-in users toggle immediately
+
 ## Session 4 Complete
 All four S24 Ultra fixes applied. Files changed: app/(tabs)/_layout.tsx, app/(tabs)/index.tsx, app/event/[id].tsx, supabase/functions/sync-events/index.ts. Edge function redeployed to lldsmbjsiaqfirerwcbq. Metro starts with zero errors. Trigger a manual sync-events invoke from the Supabase dashboard to re-populate events with corrected timestamps and clean descriptions.
 

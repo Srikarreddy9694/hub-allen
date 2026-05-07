@@ -15,6 +15,7 @@ import { useLocalSearchParams, useRouter } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import * as Calendar from 'expo-calendar';
 import { supabase } from '@/lib/supabase';
+import { useAuthStore } from '@/stores/authStore';
 import { useAttendanceStore } from '@/stores/attendanceStore';
 import CategoryBadge from '@/components/CategoryBadge';
 import AttendButton from '@/components/AttendButton';
@@ -97,6 +98,8 @@ export default function EventDetailScreen() {
   const [loading, setLoading] = useState(true);
   const [inviteVisible, setInviteVisible] = useState(false);
 
+  const session = useAuthStore((s) => s.session);
+  const openLoginSheet = useAuthStore((s) => s.openLoginSheet);
   const attendingUids = useAttendanceStore((s) => s.attendingUids);
   const savedUids = useAttendanceStore((s) => s.savedUids);
   const toggleSaved = useAttendanceStore((s) => s.toggleSaved);
@@ -187,7 +190,7 @@ export default function EventDetailScreen() {
     <View style={styles.root}>
       <ScrollView
         style={styles.scroll}
-        contentContainerStyle={styles.scrollContent}
+        contentContainerStyle={{ paddingBottom: 48 + insets.bottom }}
         showsVerticalScrollIndicator={false}
       >
         {/* Hero */}
@@ -225,7 +228,13 @@ export default function EventDetailScreen() {
           {/* Save button */}
           <TouchableOpacity
             style={[styles.saveBtn, { top: insets.top + 10 }]}
-            onPress={() => toggleSaved(event.uid)}
+            onPress={() => {
+              if (!session) {
+                openLoginSheet(() => toggleSaved(event.uid));
+                return;
+              }
+              toggleSaved(event.uid);
+            }}
             activeOpacity={0.8}
           >
             <Text style={[styles.saveIcon, isSaved && styles.saveIconActive]}>
