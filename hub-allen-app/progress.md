@@ -48,6 +48,11 @@ All screens implemented. Dependencies added: tailwindcss@3 (NativeWind preset), 
 [Fix | Event detail safe area] app/event/[id].tsx — contentContainerStyle paddingBottom now uses 48 + insets.bottom, clearing Android system nav bar on S24 Ultra
 [Fix | Save button auth] app/event/[id].tsx — save ♡ now checks session before calling toggleSaved; logged-out users see LoginSheet with callback that auto-saves after sign-in; logged-in users toggle immediately
 
+## Session 5 Complete
+[Fix | Tab label wrapping] app/(tabs)/_layout.tsx
+[Fix | Event detail safe area] app/event/[id].tsx
+[Fix | Save button auth] app/event/[id].tsx
+
 ## Session 4 Complete
 All four S24 Ultra fixes applied. Files changed: app/(tabs)/_layout.tsx, app/(tabs)/index.tsx, app/event/[id].tsx, supabase/functions/sync-events/index.ts. Edge function redeployed to lldsmbjsiaqfirerwcbq. Metro starts with zero errors. Trigger a manual sync-events invoke from the Supabase dashboard to re-populate events with corrected timestamps and clean descriptions.
 
