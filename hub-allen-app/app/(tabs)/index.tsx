@@ -276,7 +276,7 @@ export default function TonightScreen() {
         {/* Header strip */}
         <View style={[styles.headerStrip, { paddingTop: insets.top + 14 }]}>
           <Image
-            source={require('../../assets/images/hub-logo-white.png')}
+            source={require('../../assets/images/hub-logo.png')}
             style={styles.headerLogo}
             resizeMode="contain"
           />

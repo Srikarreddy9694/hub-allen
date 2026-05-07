@@ -130,7 +130,7 @@ export default function LoginSheet() {
           {state === 'idle' ? (
             <>
               <Image
-                source={require('../assets/images/hub_logo.png')}
+                source={require('../assets/images/hub-logo.png')}
                 style={styles.logo}
                 resizeMode="contain"
               />

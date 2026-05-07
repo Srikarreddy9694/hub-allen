@@ -112,7 +112,7 @@ export default function ProfileScreen() {
         <LoginSheet />
         <ScrollView contentContainerStyle={styles.loggedOutContainer}>
           <Image
-            source={require('../../assets/images/hub_logo.png')}
+            source={require('../../assets/images/hub-logo.png')}
             style={styles.loggedOutLogo}
             resizeMode="contain"
           />
