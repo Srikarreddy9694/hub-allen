@@ -26,6 +26,11 @@ All screens implemented. Dependencies added: tailwindcss@3 (NativeWind preset), 
 
 ## Session 3 — Bug Fixes
 
+### React version mismatch + Tabs crash + edge function 401
+[Fix | React pin] package.json — pinned react and react-dom to exact 19.1.0 (removed caret); regenerated package-lock.json; resolves react@19.2.x vs react-native-renderer@19.1.0 crash at startup
+[Fix | Tabs crash] app/_layout.tsx — added `import 'react-native-gesture-handler'` as first import; prevents undefined default export on Tabs component on Android
+[Fix | 401 edge fn] lib/api.ts — simplified callEdgeFunction headers to always send both `apikey` and `Authorization: Bearer <anon-key>`; removed session-token branch that sent user JWT and caused 401 on unauthenticated calls; also removed now-unused supabase import
+
 ### NotificationPrefs crash + boolean cast fixes
 [Fix | NotificationPrefs] components/NotificationPrefs.tsx — two fixes:
 1. Expo Go SDK 53 crash: wrapped Notifications.requestPermissionsAsync() and getExpoPushTokenAsync() in separate try/catch blocks; permission failure shows a non-crashing alert explaining dev build is required; token falls back to 'dev-build-required'; rest of UI (toggles, checkboxes, save) still renders and functions
