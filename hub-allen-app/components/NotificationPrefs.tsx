@@ -50,10 +50,14 @@ export default function NotificationPrefs() {
       .single();
 
     if (data) {
-      setEnabled(data.is_active);
-      setEveningAlerts(data.evening_alerts);
-      setMorningAlerts(data.morning_alerts);
-      setCategories(data.categories ?? ['all']);
+      setEnabled(data.is_active === true || data.is_active === 'true');
+      setEveningAlerts(data.evening_alerts === true || data.evening_alerts === 'true');
+      setMorningAlerts(data.morning_alerts === true || data.morning_alerts === 'true');
+      setCategories(
+        Array.isArray(data.categories)
+          ? data.categories
+          : JSON.parse(data.categories ?? '["all"]'),
+      );
       setPrefId(data.id);
     }
   }
@@ -62,10 +66,21 @@ export default function NotificationPrefs() {
     if (!user?.id) return;
 
     if (value) {
-      const { status } = await Notifications.requestPermissionsAsync();
-      if (status !== 'granted') {
-        Alert.alert('Permission needed', 'Enable notifications in your device settings to get Hub alerts.');
-        return;
+      // Request permission — skip gracefully in Expo Go (SDK 53 removed remote push)
+      let permissionGranted = false;
+      try {
+        const { status } = await Notifications.requestPermissionsAsync();
+        permissionGranted = status === 'granted';
+      } catch {
+        // expo-notifications unavailable in this environment (Expo Go SDK 53+)
+      }
+
+      if (!permissionGranted) {
+        Alert.alert(
+          'Notifications unavailable',
+          'Use a development build to enable push notifications, or enable them in your device settings.',
+        );
+        // Still allow saving prefs without a push token
       }
 
       let token = '';
@@ -74,7 +89,7 @@ export default function NotificationPrefs() {
         const result = await Notifications.getExpoPushTokenAsync(projectId ? { projectId } : undefined);
         token = result.data;
       } catch {
-        token = 'simulator-token';
+        token = 'dev-build-required';
       }
 
       const upsertData = {

@@ -23,3 +23,10 @@
 
 ## Session 2 Complete
 All screens implemented. Dependencies added: tailwindcss@3 (NativeWind preset), babel-preset-expo, react-native-screens, react-native-safe-area-context, react-native-worklets. Bundle exports successfully.
+
+## Session 3 — Bug Fixes
+
+### NotificationPrefs crash + boolean cast fixes
+[Fix | NotificationPrefs] components/NotificationPrefs.tsx — two fixes:
+1. Expo Go SDK 53 crash: wrapped Notifications.requestPermissionsAsync() and getExpoPushTokenAsync() in separate try/catch blocks; permission failure shows a non-crashing alert explaining dev build is required; token falls back to 'dev-build-required'; rest of UI (toggles, checkboxes, save) still renders and functions
+2. Supabase boolean-as-string cast: morning_alerts and evening_alerts now read as `=== true || === 'true'`; categories parsed with Array.isArray guard, falling back to JSON.parse for string values
