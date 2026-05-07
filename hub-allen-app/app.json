@@ -1,0 +1,49 @@
+{
+  "expo": {
+    "name": "Hub Allen",
+    "slug": "hub-allen",
+    "version": "1.0.0",
+    "scheme": "huballen",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "splash": {
+      "image": "./assets/splash-icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#F5EFE4"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.huballen.app"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#F5EFE4"
+      },
+      "package": "com.huballen.app",
+      "edgeToEdgeEnabled": true,
+      "predictiveBackGestureEnabled": false
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-secure-store",
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/icon.png",
+          "color": "#1A3622"
+        }
+      ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "hub-allen"
+      }
+    }
+  }
+}

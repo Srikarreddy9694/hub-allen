@@ -1,0 +1,12 @@
+# Supabase CLI config — used for linking and function deployment
+[api]
+port = 54321
+
+[functions.sync-events]
+verify_jwt = false
+
+[functions.get-events]
+verify_jwt = false
+
+[functions.send-notifications]
+verify_jwt = false
