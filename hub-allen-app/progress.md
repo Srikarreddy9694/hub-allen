@@ -31,6 +31,10 @@ All screens implemented. Dependencies added: tailwindcss@3 (NativeWind preset), 
 [Fix | Tabs crash] app/_layout.tsx — added `import 'react-native-gesture-handler'` as first import; prevents undefined default export on Tabs component on Android
 [Fix | 401 edge fn] lib/api.ts — simplified callEdgeFunction headers to always send both `apikey` and `Authorization: Bearer <anon-key>`; removed session-token branch that sent user JWT and caused 401 on unauthenticated calls; also removed now-unused supabase import
 
+### Logo filename + conflicting root entry files
+[Fix | Logo] assets/images/hub-logo.png — created as canonical filename (copy of hub_logo.png); updated require() paths in app/(tabs)/index.tsx (was hub-logo-white.png), components/LoginSheet.tsx (was hub_logo.png), app/(tabs)/profile.tsx (was hub_logo.png)
+[Fix | Entry conflict] deleted index.ts (registerRootComponent conflicts with Expo Router's own entry point) and App.tsx (unused default template file); bundle resolves cleanly without them
+
 ### NotificationPrefs crash + boolean cast fixes
 [Fix | NotificationPrefs] components/NotificationPrefs.tsx — two fixes:
 1. Expo Go SDK 53 crash: wrapped Notifications.requestPermissionsAsync() and getExpoPushTokenAsync() in separate try/catch blocks; permission failure shows a non-crashing alert explaining dev build is required; token falls back to 'dev-build-required'; rest of UI (toggles, checkboxes, save) still renders and functions
