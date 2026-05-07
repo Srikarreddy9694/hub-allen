@@ -1,4 +1,3 @@
-import { supabase } from '@/lib/supabase';
 import type { Event, EventCategory } from '@/types';
 
 const FUNCTION_URL = `${process.env.EXPO_PUBLIC_SUPABASE_URL}/functions/v1`;
@@ -13,16 +12,11 @@ async function callEdgeFunction<T>(
     ),
   ).toString();
 
-  const { data: { session } } = await supabase.auth.getSession();
   const headers: Record<string, string> = {
     'Content-Type': 'application/json',
     'apikey': process.env.EXPO_PUBLIC_SUPABASE_KEY!,
+    'Authorization': `Bearer ${process.env.EXPO_PUBLIC_SUPABASE_KEY!}`,
   };
-  if (session?.access_token) {
-    headers['Authorization'] = `Bearer ${session.access_token}`;
-  } else {
-    headers['Authorization'] = `Bearer ${process.env.EXPO_PUBLIC_SUPABASE_KEY!}`;
-  }
 
   const res = await fetch(`${FUNCTION_URL}/${name}?${query}`, { headers });
   if (!res.ok) throw new Error(`Edge function ${name} failed: ${res.status}`);
