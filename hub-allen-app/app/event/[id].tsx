@@ -57,6 +57,19 @@ const RESTAURANTS = [
 
 type EventWithDesc = Event & { description: string | null };
 
+function stripHtml(html: string | null): string {
+  if (!html) return '';
+  return html
+    .replace(/<[^>]*>/g, ' ')
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&nbsp;/g, ' ')
+    .replace(/&quot;/g, '"')
+    .replace(/\s{2,}/g, ' ')
+    .trim();
+}
+
 function formatDate(iso: string): string {
   return new Date(iso).toLocaleDateString('en-US', {
     weekday: 'long',
@@ -271,7 +284,7 @@ export default function EventDetailScreen() {
 
           {/* Description */}
           {event.description ? (
-            <Text style={styles.description}>{event.description}</Text>
+            <Text style={styles.description}>{stripHtml(event.description)}</Text>
           ) : (
             <Text style={styles.description}>
               Join us at The HUB Allen for {event.summary}. All ages welcome!

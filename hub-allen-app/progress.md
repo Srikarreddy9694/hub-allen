@@ -35,6 +35,13 @@ All screens implemented. Dependencies added: tailwindcss@3 (NativeWind preset), 
 [Fix | Logo] assets/images/hub-logo.png — created as canonical filename (copy of hub_logo.png); updated require() paths in app/(tabs)/index.tsx (was hub-logo-white.png), components/LoginSheet.tsx (was hub_logo.png), app/(tabs)/profile.tsx (was hub_logo.png)
 [Fix | Entry conflict] deleted index.ts (registerRootComponent conflicts with Expo Router's own entry point) and App.tsx (unused default template file); bundle resolves cleanly without them
 
+## Session 4 — Bug Fixes
+
+[Fix | Tab bar safe area] app/(tabs)/_layout.tsx — added useSafeAreaInsets, tab bar height now accounts for S24 Ultra system navigation bar (height: 64 + insets.bottom, paddingBottom: insets.bottom + 6); removed hardcoded paddingBottom from StyleSheet
+[Fix | Logo size] app/(tabs)/index.tsx — increased header logo from 38×160 to 52×220
+[Fix | Event time timezone] supabase/functions/sync-events/index.ts — parseDate now correctly applies America/Chicago offset (CDT -05:00 Mar–Oct / CST -06:00 Nov–Feb) instead of treating local time as UTC; DTSTART/DTEND cases now pass full rawKey+value so TZID param is available to parseDate
+[Fix | HTML in description] supabase/functions/sync-events/index.ts + app/event/[id].tsx — stripHtml() added in edge function before DB storage (strips tags, decodes HTML entities, collapses whitespace) and in app as safety net on description render
+
 ### NotificationPrefs crash + boolean cast fixes
 [Fix | NotificationPrefs] components/NotificationPrefs.tsx — two fixes:
 1. Expo Go SDK 53 crash: wrapped Notifications.requestPermissionsAsync() and getExpoPushTokenAsync() in separate try/catch blocks; permission failure shows a non-crashing alert explaining dev build is required; token falls back to 'dev-build-required'; rest of UI (toggles, checkboxes, save) still renders and functions

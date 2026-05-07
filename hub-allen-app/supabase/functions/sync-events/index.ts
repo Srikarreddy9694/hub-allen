@@ -29,17 +29,43 @@ function unfoldLines(raw: string): string[] {
 }
 
 function parseDate(val: string): Date {
-  // Handle DATE-TIME with timezone param: DTSTART;TZID=America/Chicago:20260503T180000
+  const hasCentralTZ = val.toUpperCase().includes('TZID=AMERICA/CHICAGO') ||
+                       val.toUpperCase().includes('TZID=US/CENTRAL');
+
   const stripped = val.includes(':') ? val.split(':').pop()! : val;
-  const s = stripped.replace(/Z$/, '');
+  const s = stripped.replace(/Z$/, '').trim();
+
   if (s.length === 8) {
-    // DATE-only: YYYYMMDD
-    return new Date(`${s.slice(0, 4)}-${s.slice(4, 6)}-${s.slice(6, 8)}T00:00:00`);
+    // DATE-only: YYYYMMDD — treat as midnight CST
+    return new Date(`${s.slice(0, 4)}-${s.slice(4, 6)}-${s.slice(6, 8)}T00:00:00-05:00`);
   }
-  // DATETIME: YYYYMMDDTHHmmss
-  return new Date(
-    `${s.slice(0, 4)}-${s.slice(4, 6)}-${s.slice(6, 8)}T${s.slice(9, 11)}:${s.slice(11, 13)}:${s.slice(13, 15)}`,
-  );
+
+  const datePart = `${s.slice(0, 4)}-${s.slice(4, 6)}-${s.slice(6, 8)}`;
+  const timePart = `${s.slice(9, 11)}:${s.slice(11, 13)}:${s.slice(13, 15)}`;
+
+  if (s.endsWith('Z')) {
+    return new Date(`${datePart}T${timePart}Z`);
+  }
+
+  // Apply CDT (-05:00) Mar–Oct, CST (-06:00) Nov–Feb
+  const month = parseInt(s.slice(4, 6), 10);
+  const offset = (month >= 3 && month <= 10) ? '-05:00' : '-06:00';
+  return new Date(`${datePart}T${timePart}${offset}`);
+}
+
+function stripHtml(html: string | null): string | null {
+  if (!html) return null;
+  return html
+    .replace(/<[^>]*>/g, ' ')
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&nbsp;/g, ' ')
+    .replace(/&quot;/g, '"')
+    .replace(/\\n/g, '\n')
+    .replace(/\\,/g, ',')
+    .replace(/\s{2,}/g, ' ')
+    .trim();
 }
 
 function parseICS(raw: string): VEvent[] {
@@ -84,9 +110,11 @@ function parseICS(raw: string): VEvent[] {
     switch (key) {
       case 'UID':         cur.uid = value; break;
       case 'SUMMARY':     cur.summary = value.replace(/\\n/g, '\n').replace(/\\,/g, ','); break;
-      case 'DESCRIPTION': cur.description = value.replace(/\\n/g, '\n').replace(/\\,/g, ','); break;
-      case 'DTSTART':     cur.dtstart = parseDate(value || line.slice(colonIdx + 1)); break;
-      case 'DTEND':       cur.dtend = parseDate(value || line.slice(colonIdx + 1)); break;
+      case 'DESCRIPTION':
+        cur.description = stripHtml(value.replace(/\\n/g, '\n').replace(/\\,/g, ','));
+        break;
+      case 'DTSTART':     cur.dtstart = parseDate(rawKey + ':' + value); break;
+      case 'DTEND':       cur.dtend = parseDate(rawKey + ':' + value); break;
       case 'RRULE':       cur.rrule = value; break;
       case 'URL':         cur.eventUrl = value; break;
       case 'X-WP-IMAGES-URL': cur.imageUrl = value; break;

@@ -387,8 +387,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   headerLogo: {
-    height: 38,
-    width: 160,
+    height: 52,
+    width: 220,
     marginBottom: 10,
   },
   headerMeta: {
