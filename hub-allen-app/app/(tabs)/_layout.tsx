@@ -5,17 +5,68 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Colors } from '@/constants/colors';
 import { Fonts, FontSizes } from '@/constants/typography';
 
+function CalendarIcon({ focused }: { focused: boolean }) {
+  const tomorrow = new Date();
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  const dateNum = tomorrow.toLocaleDateString('en-US', {
+    day: 'numeric',
+    timeZone: 'America/Chicago',
+  });
+
+  return (
+    <View style={calStyles.wrap}>
+      <View style={calStyles.header} />
+      <View style={calStyles.body}>
+        <Text style={[calStyles.date, focused && calStyles.dateFocused]}>
+          {dateNum}
+        </Text>
+      </View>
+    </View>
+  );
+}
+
+const calStyles = StyleSheet.create({
+  wrap: {
+    width: 24,
+    height: 22,
+    borderRadius: 4,
+    overflow: 'hidden',
+    borderWidth: 1.5,
+    borderColor: Colors.textLight,
+  },
+  header: {
+    height: 6,
+    backgroundColor: Colors.hubGold,
+  },
+  body: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: Colors.white,
+  },
+  date: {
+    fontSize: 9,
+    fontFamily: Fonts.bodySemi,
+    color: Colors.textDark,
+    lineHeight: 11,
+  },
+  dateFocused: {
+    color: Colors.hubGreen,
+  },
+});
+
 interface TabIconProps {
-  emoji: string;
+  emoji?: string;
+  customIcon?: React.ReactNode;
   label: string;
   focused: boolean;
 }
 
-function TabIcon({ emoji, label, focused }: TabIconProps) {
+function TabIcon({ emoji, customIcon, label, focused }: TabIconProps) {
   return (
     <View style={styles.tabItem}>
-      <Text style={styles.emoji}>{emoji}</Text>
-      <Text style={[styles.label, focused && styles.labelActive]} numberOfLines={1}>
+      {customIcon ?? <Text style={styles.emoji}>{emoji}</Text>}
+      <Text style={[styles.label, focused && styles.labelActive]}>
         {label}
       </Text>
       {focused && <View style={styles.dot} />}
@@ -44,7 +95,7 @@ export default function TabsLayout() {
         name="index"
         options={{
           tabBarIcon: ({ focused }) => (
-            <TabIcon emoji="🌙" label="Today" focused={focused} />
+            <TabIcon emoji="☀️" label="Today" focused={focused} />
           ),
         }}
       />
@@ -52,7 +103,11 @@ export default function TabsLayout() {
         name="events"
         options={{
           tabBarIcon: ({ focused }) => (
-            <TabIcon emoji="📅" label="Upcoming" focused={focused} />
+            <TabIcon
+              customIcon={<CalendarIcon focused={focused} />}
+              label="Upcoming"
+              focused={focused}
+            />
           ),
         }}
       />
@@ -84,7 +139,7 @@ const styles = StyleSheet.create({
   },
   label: {
     fontFamily: Fonts.bodyMed,
-    fontSize: 9,
+    fontSize: 8,
     color: Colors.textLight,
     letterSpacing: 0,
     textAlign: 'center',

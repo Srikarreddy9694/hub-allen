@@ -82,6 +82,15 @@ All four S24 Ultra fixes applied. Files changed: app/(tabs)/_layout.tsx, app/(ta
 
 ## Session 8 Complete
 
+## Session 9 — Bug Fixes
+
+[Fix | Upco truncation] app/(tabs)/_layout.tsx — removed numberOfLines={1} from label Text; label fontSize back to 8; no width/overflow/adjustsFontSizeToFit added
+[Fix | Today icon] app/(tabs)/_layout.tsx — moon emoji 🌙 → sun emoji ☀️ for Today tab
+[Fix | Dynamic calendar] app/(tabs)/_layout.tsx — replaced 📅 emoji with CalendarIcon component showing tomorrow's actual date number (gold header strip, white body, updates automatically each day); TabIconProps extended with optional customIcon?: React.ReactNode
+[Fix | Also Today] app/(tabs)/index.tsx — section header "ALSO TONIGHT" → "ALSO TODAY"
+
+## Session 9 Complete
+
 ### NotificationPrefs crash + boolean cast fixes
 [Fix | NotificationPrefs] components/NotificationPrefs.tsx — two fixes:
 1. Expo Go SDK 53 crash: wrapped Notifications.requestPermissionsAsync() and getExpoPushTokenAsync() in separate try/catch blocks; permission failure shows a non-crashing alert explaining dev build is required; token falls back to 'dev-build-required'; rest of UI (toggles, checkboxes, save) still renders and functions

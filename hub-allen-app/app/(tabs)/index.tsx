@@ -322,7 +322,7 @@ export default function TonightScreen() {
             {alsoTonightEvents.length > 0 && (
               <>
                 <View style={styles.sectionHeader}>
-                  <Text style={styles.sectionTitle}>ALSO TONIGHT</Text>
+                  <Text style={styles.sectionTitle}>ALSO TODAY</Text>
                 </View>
                 {alsoTonightEvents.map((ev) => (
                   <CompactCard key={ev.uid} event={ev} />
