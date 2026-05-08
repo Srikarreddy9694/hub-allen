@@ -15,7 +15,7 @@ function TabIcon({ emoji, label, focused }: TabIconProps) {
   return (
     <View style={styles.tabItem}>
       <Text style={styles.emoji}>{emoji}</Text>
-      <Text style={[styles.label, focused && styles.labelActive]}>
+      <Text style={[styles.label, focused && styles.labelActive]} numberOfLines={1}>
         {label}
       </Text>
       {focused && <View style={styles.dot} />}
@@ -44,7 +44,7 @@ export default function TabsLayout() {
         name="index"
         options={{
           tabBarIcon: ({ focused }) => (
-            <TabIcon emoji="🌙" label="Tonight" focused={focused} />
+            <TabIcon emoji="🌙" label="Today" focused={focused} />
           ),
         }}
       />
@@ -74,17 +74,21 @@ const styles = StyleSheet.create({
   },
   tabItem: {
     alignItems: 'center',
-    gap: 3,
-    paddingTop: 8,
+    justifyContent: 'center',
+    flex: 1,
+    paddingTop: 6,
   },
   emoji: {
-    fontSize: 21,
+    fontSize: 20,
+    lineHeight: 24,
   },
   label: {
     fontFamily: Fonts.bodyMed,
-    fontSize: 8,
+    fontSize: 9,
     color: Colors.textLight,
     letterSpacing: 0,
+    textAlign: 'center',
+    marginTop: 2,
   },
   labelActive: {
     color: Colors.hubGreen,
@@ -93,8 +97,8 @@ const styles = StyleSheet.create({
   dot: {
     width: 4,
     height: 4,
-    borderRadius: 999,
+    borderRadius: 2,
     backgroundColor: Colors.hubGold,
-    marginTop: 1,
+    marginTop: 2,
   },
 });

@@ -136,7 +136,7 @@ function FeaturedEventCard({ event }: { event: Event }) {
             {[0, 1, 2].map((i) => (
               <View key={i} style={[styles.avatarCircle, { marginLeft: i === 0 ? 0 : -6 }]} />
             ))}
-            <Text style={styles.goingText}>{event.attendee_count} going</Text>
+            <Text style={styles.goingText}>{event.attendee_count === 0 ? 'Be the first' : `${event.attendee_count} going`}</Text>
           </View>
           <AttendButton event={event} size="compact" />
         </View>
@@ -222,7 +222,7 @@ function CompactCard({ event }: { event: Event }) {
               <Text style={styles.freePillText}>FREE</Text>
             </View>
           )}
-          <Text style={styles.compactGoing}>{event.attendee_count} going</Text>
+          <Text style={styles.compactGoing}>{event.attendee_count === 0 ? 'Be the first' : `${event.attendee_count} going`}</Text>
         </View>
       </View>
     </TouchableOpacity>
@@ -281,18 +281,18 @@ export default function TonightScreen() {
             resizeMode="contain"
           />
           <View style={styles.headerMeta}>
-            <Text style={styles.headerTonight}>TONIGHT</Text>
+            <Text style={styles.headerTonight}>TODAY</Text>
             <Text style={styles.headerDate}>{formatHeaderDate()}</Text>
           </View>
         </View>
 
         {isLoading && tonightEvents.length === 0 ? (
           <View style={styles.loadingBox}>
-            <Text style={styles.loadingText}>Loading tonight's events…</Text>
+            <Text style={styles.loadingText}>Loading today's events…</Text>
           </View>
         ) : tonightEvents.length === 0 ? (
           <View style={styles.loadingBox}>
-            <Text style={styles.loadingText}>No events tonight. Check back soon!</Text>
+            <Text style={styles.loadingText}>No events today. Check back soon!</Text>
           </View>
         ) : (
           <>

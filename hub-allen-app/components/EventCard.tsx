@@ -86,7 +86,7 @@ export default function EventCard({ event }: Props) {
               <Text style={styles.freeText}>FREE</Text>
             </View>
           )}
-          <Text style={styles.going}>{event.attendee_count} going</Text>
+          <Text style={styles.going}>{event.attendee_count === 0 ? 'Be the first' : `${event.attendee_count} going`}</Text>
         </View>
       </View>
     </TouchableOpacity>

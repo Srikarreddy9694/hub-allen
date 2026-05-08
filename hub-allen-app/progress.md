@@ -71,6 +71,17 @@ Root cause: useSafeAreaInsets not applied consistently across all screens and mo
 ## Session 4 Complete
 All four S24 Ultra fixes applied. Files changed: app/(tabs)/_layout.tsx, app/(tabs)/index.tsx, app/event/[id].tsx, supabase/functions/sync-events/index.ts. Edge function redeployed to lldsmbjsiaqfirerwcbq. Metro starts with zero errors. Trigger a manual sync-events invoke from the Supabase dashboard to re-populate events with corrected timestamps and clean descriptions.
 
+## Session 8 — Pre-demo Polish
+
+[Fix | Tonight→Today] app/(tabs)/index.tsx — header "TONIGHT"→"TODAY", loading text "tonight's"→"today's", empty state "tonight"→"today"
+[Fix | Tonight→Today] app/(tabs)/_layout.tsx — tab label "Tonight"→"Today"
+[Fix | TabIcon flex] app/(tabs)/_layout.tsx — rebuilt TabIcon: flex:1 + justifyContent:center on tabItem, fontSize:9, lineHeight:24 on emoji, marginTop:2 on label and dot, numberOfLines={1} on label Text; definitively prevents "Upcoming" from wrapping on S24 Ultra
+[Fix | Be the first] components/EventCard.tsx — going text now "Be the first" when attendee_count === 0
+[Fix | Be the first] app/(tabs)/index.tsx — FeaturedEventCard goingText and CompactCard compactGoing now "Be the first" when attendee_count === 0
+[Confirm | Calendar no auth] app/event/[id].tsx — handleAddToCalendar confirmed: no session check, calendar available to all users
+
+## Session 8 Complete
+
 ### NotificationPrefs crash + boolean cast fixes
 [Fix | NotificationPrefs] components/NotificationPrefs.tsx — two fixes:
 1. Expo Go SDK 53 crash: wrapped Notifications.requestPermissionsAsync() and getExpoPushTokenAsync() in separate try/catch blocks; permission failure shows a non-crashing alert explaining dev build is required; token falls back to 'dev-build-required'; rest of UI (toggles, checkboxes, save) still renders and functions
