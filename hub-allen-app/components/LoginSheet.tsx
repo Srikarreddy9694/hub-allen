@@ -14,6 +14,7 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { supabase } from '@/lib/supabase';
 import { useAuthStore } from '@/stores/authStore';
 import { Colors } from '@/constants/colors';
@@ -24,6 +25,7 @@ import { Shadows } from '@/constants/shadows';
 const RESEND_COOLDOWN = 30;
 
 export default function LoginSheet() {
+  const insets = useSafeAreaInsets();
   const visible = useAuthStore((s) => s.loginSheetVisible);
   const closeLoginSheet = useAuthStore((s) => s.closeLoginSheet);
 
@@ -123,7 +125,7 @@ export default function LoginSheet() {
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         pointerEvents="box-none"
       >
-        <View style={styles.sheet}>
+        <View style={[styles.sheet, { paddingBottom: insets.bottom + Spacing.xl }]}>
           {/* Drag handle */}
           <View style={styles.handle} />
 
@@ -231,7 +233,6 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: Radius.lg,
     borderTopRightRadius: Radius.lg,
     paddingHorizontal: Spacing.xl,
-    paddingBottom: Platform.OS === 'ios' ? 40 : Spacing.xl,
     paddingTop: Spacing.base,
     alignItems: 'center',
     ...Shadows.sheet,

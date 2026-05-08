@@ -8,7 +8,7 @@ import {
   View,
   ScrollView,
 } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useEventsStore } from '@/stores/eventsStore';
 import EventCard from '@/components/EventCard';
 import { Colors } from '@/constants/colors';
@@ -65,6 +65,7 @@ function groupByDate(events: Event[]): { title: string; data: Event[] }[] {
 }
 
 export default function EventsScreen() {
+  const insets = useSafeAreaInsets();
   const upcomingEvents = useEventsStore((s) => s.upcomingEvents);
   const selectedCategory = useEventsStore((s) => s.selectedCategory);
   const isLoading = useEventsStore((s) => s.isLoading);
@@ -181,7 +182,7 @@ export default function EventsScreen() {
           ListFooterComponent={ListFooter}
           onEndReached={handleLoadMore}
           onEndReachedThreshold={0.3}
-          contentContainerStyle={styles.listContent}
+          contentContainerStyle={{ paddingBottom: 48 + insets.bottom }}
           stickySectionHeadersEnabled={false}
           showsVerticalScrollIndicator={false}
         />

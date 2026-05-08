@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
     fontFamily: Fonts.bodyMed,
     fontSize: 8,
     color: Colors.textLight,
-    letterSpacing: 0.4,
+    letterSpacing: 0,
   },
   labelActive: {
     color: Colors.hubGreen,

@@ -271,7 +271,7 @@ export default function TonightScreen() {
       <ScrollView
         style={styles.scroll}
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={styles.scrollContent}
+        contentContainerStyle={{ paddingBottom: 48 + insets.bottom }}
       >
         {/* Header strip */}
         <View style={[styles.headerStrip, { paddingTop: insets.top + 14 }]}>

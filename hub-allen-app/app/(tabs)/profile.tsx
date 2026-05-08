@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useAuthStore } from '@/stores/authStore';
 import { useAttendanceStore } from '@/stores/attendanceStore';
 import NotificationPrefs from '@/components/NotificationPrefs';
@@ -61,6 +61,7 @@ function SavedEventRow({ event }: { event: Event }) {
 }
 
 export default function ProfileScreen() {
+  const insets = useSafeAreaInsets();
   const user = useAuthStore((s) => s.user);
   const openLoginSheet = useAuthStore((s) => s.openLoginSheet);
   const signOut = useAuthStore((s) => s.signOut);
@@ -137,7 +138,7 @@ export default function ProfileScreen() {
       <LoginSheet />
       <ScrollView
         style={styles.scroll}
-        contentContainerStyle={styles.scrollContent}
+        contentContainerStyle={{ paddingBottom: 40 + insets.bottom }}
         showsVerticalScrollIndicator={false}
       >
         {/* Avatar + name */}
