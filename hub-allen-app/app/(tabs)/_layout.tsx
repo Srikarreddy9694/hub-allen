@@ -15,11 +15,7 @@ function TabIcon({ emoji, label, focused }: TabIconProps) {
   return (
     <View style={styles.tabItem}>
       <Text style={styles.emoji}>{emoji}</Text>
-      <Text
-        style={[styles.label, focused && styles.labelActive]}
-        numberOfLines={1}
-        adjustsFontSizeToFit
-      >
+      <Text style={[styles.label, focused && styles.labelActive]}>
         {label}
       </Text>
       {focused && <View style={styles.dot} />}
@@ -80,15 +76,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     gap: 3,
     paddingTop: 8,
-    width: '33.33%',
-    overflow: 'hidden',
   },
   emoji: {
     fontSize: 21,
   },
   label: {
     fontFamily: Fonts.bodyMed,
-    fontSize: FontSizes.xs,
+    fontSize: 8,
     color: Colors.textLight,
     letterSpacing: 0.4,
   },

@@ -53,6 +53,12 @@ All screens implemented. Dependencies added: tailwindcss@3 (NativeWind preset), 
 [Fix | Event detail safe area] app/event/[id].tsx
 [Fix | Save button auth] app/event/[id].tsx
 
+## Session 6 — Bug Fixes
+
+[Fix | Tab bar revert + fix] app/(tabs)/_layout.tsx — reverted broken width/adjustsFontSizeToFit approach, fixed label wrapping by reducing fontSize to 8px
+
+## Session 6 Complete
+
 ## Session 4 Complete
 All four S24 Ultra fixes applied. Files changed: app/(tabs)/_layout.tsx, app/(tabs)/index.tsx, app/event/[id].tsx, supabase/functions/sync-events/index.ts. Edge function redeployed to lldsmbjsiaqfirerwcbq. Metro starts with zero errors. Trigger a manual sync-events invoke from the Supabase dashboard to re-populate events with corrected timestamps and clean descriptions.
 
