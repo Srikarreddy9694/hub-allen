@@ -65,6 +65,9 @@ All screens implemented. Dependencies added: tailwindcss@3 (NativeWind preset), 
 [Fix | Tab label wrapping] app/(tabs)/_layout.tsx — removed letterSpacing (was 0.4), "Upcoming" now fits on one line on S24 Ultra
 [Fix | Global safe area audit] all tab screens and LoginSheet — confirmed _layout.tsx and event/[id].tsx already had insets; added useSafeAreaInsets to events.tsx and profile.tsx; inlined contentContainerStyle on index.tsx, events.tsx, and profile.tsx ScrollViews/SectionList to use insets.bottom; LoginSheet modal also fixed above
 
+## Session 7 Complete
+Root cause: useSafeAreaInsets not applied consistently across all screens and modals. Fixed globally across all 5 screens and LoginSheet.
+
 ## Session 4 Complete
 All four S24 Ultra fixes applied. Files changed: app/(tabs)/_layout.tsx, app/(tabs)/index.tsx, app/event/[id].tsx, supabase/functions/sync-events/index.ts. Edge function redeployed to lldsmbjsiaqfirerwcbq. Metro starts with zero errors. Trigger a manual sync-events invoke from the Supabase dashboard to re-populate events with corrected timestamps and clean descriptions.
 
